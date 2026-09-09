@@ -20,8 +20,8 @@ The new site should keep the same *substance* (it's still fundamentally a resume
 
 | Concern | Choice | Notes |
 |---|---|---|
-| Runtime | Node.js 20 (LTS) | Pinned via `engines.node` in `package.json` and `node-version: 20` in the GitHub Actions workflow, so local dev and CI match. |
-| Framework | React 18+ with Vite | Fast dev server, first-class static build for GitHub Pages, no server runtime needed. Vite 5+ requires Node 18+; Node 20 satisfies this. |
+| Runtime | Node.js 22 (LTS) | Pinned via `engines.node` in `package.json` and `node-version: 22` in the GitHub Actions workflow, so local dev and CI match. |
+| Framework | React 18+ with Vite | Fast dev server, first-class static build for GitHub Pages, no server runtime needed. Vite 5+ requires Node 18+; Node 22 satisfies this. |
 | Language | TypeScript | Type-safe JSON content schemas via `interface`/`zod`. |
 | Styling / Components | Tailwind CSS + shadcn/ui | shadcn components are copied into the repo (not an npm dependency), built on Radix primitives, and themed entirely through CSS variables — this is what makes a multi-theme switcher clean to implement and extend. |
 | Routing | React Router (`BrowserRouter`) | See §7 for base-path handling. |
@@ -49,7 +49,7 @@ Navigation, section order, and which sections are enabled at all must be **confi
 
 ## 5. Content Data Model (JSON-driven)
 
-All personal content lives under `src/data/`, kept separate from component code so a fork only needs to touch this directory (plus `content/blog/` for posts).
+All personal content lives under `src/data/`, kept separate from component code so a fork only needs to touch this directory (plus `content/blog/` for posts). (The app itself lives under a `website/` subfolder at the repo root — so the full path is `website/src/data/`, `website/content/blog/`, etc. — `docs/` at the root is planning documentation only.)
 
 ```
 src/data/

@@ -13,7 +13,7 @@ Not confirmed with the user — flag/correct before implementation locks these i
 
 ## Confirmed (no longer assumptions)
 
-- Node.js 20 (LTS) as the runtime, pinned in `engines` and CI.
+- Node.js 22 (LTS) as the runtime, pinned in `engines` and CI (matches the maintainer's local environment).
 - GitHub Pages deployment is the target (feasibility confirmed).
 - Repository name: **mirai-launchpad** — "Mirai" ties to the OjasaMirai brand (future), "Launchpad" signals the site's purpose (launching a career/securing a job). Used as the GitHub repo name and `package.json` `name` field.
 

@@ -12,17 +12,17 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 
 | ID | User Story | Acceptance Criteria | Priority | Status |
 |---|---|---|---|---|
-| ST-001 | As a Maintainer, I want a Vite + React + TypeScript project scaffolded, so I have a working dev/build baseline. | `npm run dev` and `npm run build` succeed on a clean clone. | Must | Pending |
-| ST-002 | As a Maintainer, I want Node 20 pinned, so local and CI environments match. | `engines.node` set in `package.json`; workflow uses `node-version: 20`. | Must | Pending |
-| ST-003 | As a Maintainer, I want Tailwind CSS configured, so components can be styled and themed via CSS variables. | `tailwind.config`, PostCSS, base styles wired in. | Must | Pending |
-| ST-004 | As a Maintainer, I want shadcn/ui installed and configured, so I have accessible, theme-aware component primitives. | `components.json` configured; Button, Card, Dialog, NavigationMenu generated and rendering. | Must | Pending |
-| ST-005 | As a Maintainer, I want React Router installed with a route tree, so navigation between sections works as real routes. | Routes defined for every section/page in §4 of requirements. | Must | Pending |
-| ST-006 | As a Maintainer, I want Framer Motion installed, so section/page transitions are possible. | Library installed; at least one transition wired as proof. | Should | Pending |
-| ST-007 | As a Maintainer, I want lucide-react installed, so icons are available across components. | Library installed; used in nav/theme switcher. | Should | Pending |
-| ST-008 | As a Maintainer, I want zod installed with a shared validation utility, so JSON content can be runtime-validated. | Utility function exists and is reused by every data loader. | Must | Pending |
-| ST-009 | As a Maintainer, I want ESLint + Prettier configured, so code style stays consistent across contributions/forks. | Lint script passes on a clean checkout. | Should | Pending |
-| ST-010 | As a Maintainer, I want a sensible `.gitignore` (node_modules, dist, .env), so build artifacts and secrets aren't committed. | File present and effective. | Must | Pending |
-| ST-104 *(added in second validation pass)* | As a Maintainer, I want Vitest + React Testing Library installed and configured with an `npm test` script, so ST-071 (PR checks) and ST-092 (OjasaMirai badge test) have something to actually run. | `npm test` runs successfully on a clean clone, even with zero tests written yet. | Must | Pending |
+| ST-001 | As a Maintainer, I want a Vite + React + TypeScript project scaffolded, so I have a working dev/build baseline. | `npm run dev` and `npm run build` succeed on a clean clone. | Must | **Done** |
+| ST-002 | As a Maintainer, I want Node 22 pinned, so local and CI environments match. | `engines.node` set in `package.json`; workflow uses `node-version: 22`. | Must | **Done** *(engines.node set; CI `node-version` lands with Epic 8)* |
+| ST-003 | As a Maintainer, I want Tailwind CSS configured, so components can be styled and themed via CSS variables. | `tailwind.config`, PostCSS, base styles wired in. | Must | **Done** *(Tailwind v4 CSS-first config via `@tailwindcss/vite`, no separate `tailwind.config`/PostCSS file needed)* |
+| ST-004 | As a Maintainer, I want shadcn/ui installed and configured, so I have accessible, theme-aware component primitives. | `components.json` configured; Button, Card, Dialog, NavigationMenu generated and rendering. | Must | **Done** *(Radix base, not the newer Base UI default — matches requirements §3)* |
+| ST-005 | As a Maintainer, I want React Router installed with a route tree, so navigation between sections works as real routes. | Routes defined for every section/page in §4 of requirements. | Must | **Done** *(stub pages; content lands with Epic 5, `basename` lands with Epic 6)* |
+| ST-006 | As a Maintainer, I want Framer Motion installed, so section/page transitions are possible. | Library installed; at least one transition wired as proof. | Should | **Done** *(`PageTransition` wrapper, respects `prefers-reduced-motion`)* |
+| ST-007 | As a Maintainer, I want lucide-react installed, so icons are available across components. | Library installed; used in nav/theme switcher. | Should | Pending *(installed; nav/theme switcher usage lands with Epic 3/4)* |
+| ST-008 | As a Maintainer, I want zod installed with a shared validation utility, so JSON content can be runtime-validated. | Utility function exists and is reused by every data loader. | Must | **Done** *(`validateData()`; reuse by loaders lands with Epic 2)* |
+| ST-009 | As a Maintainer, I want ESLint + Prettier configured, so code style stays consistent across contributions/forks. | Lint script passes on a clean checkout. | Should | **Done** |
+| ST-010 | As a Maintainer, I want a sensible `.gitignore` (node_modules, dist, .env), so build artifacts and secrets aren't committed. | File present and effective. | Must | **Done** |
+| ST-104 *(added in second validation pass)* | As a Maintainer, I want Vitest + React Testing Library installed and configured with an `npm test` script, so ST-071 (PR checks) and ST-092 (OjasaMirai badge test) have something to actually run. | `npm test` runs successfully on a clean clone, even with zero tests written yet. | Must | **Done** |
 
 ## Epic 2 — Data Layer & Schemas
 

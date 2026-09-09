@@ -2,7 +2,7 @@
 
 | Layer | Tool | Purpose |
 |---|---|---|
-| Runtime | Node.js 20 (LTS) | JavaScript runtime for local dev and CI builds. |
+| Runtime | Node.js 22 (LTS) | JavaScript runtime for local dev and CI builds. |
 | Framework | React 18 | UI component framework. |
 | Build tool | Vite | Dev server + production bundler, outputs static `dist/`. |
 | Language | TypeScript | Static typing across components and data schemas. |
