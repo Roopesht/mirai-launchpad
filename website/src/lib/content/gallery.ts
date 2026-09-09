@@ -1,0 +1,22 @@
+import { z } from 'zod'
+import { validateData } from '@/lib/validate-data'
+import raw from '@/data/gallery.json'
+
+const galleryEntrySchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  imageFile: z.string(),
+})
+
+export type GalleryEntry = z.infer<typeof galleryEntrySchema>
+
+export const gallery: GalleryEntry[] = validateData(
+  z.array(galleryEntrySchema),
+  raw,
+  'src/data/gallery.json',
+)
+
+/** Base-aware URL for a gallery image (files live under `public/gallery/`). */
+export function galleryImageSrc(imageFile: string): string {
+  return `${import.meta.env.BASE_URL}gallery/${imageFile}`
+}

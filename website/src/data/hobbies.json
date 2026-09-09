@@ -1,0 +1,20 @@
+[
+  {
+    "id": "reading",
+    "title": "Reading",
+    "description": "Replace with a short, personal blurb about this hobby.",
+    "icon": "BookOpen"
+  },
+  {
+    "id": "hiking",
+    "title": "Hiking",
+    "description": "Replace with a short, personal blurb about this hobby.",
+    "icon": "Mountain"
+  },
+  {
+    "id": "chess",
+    "title": "Chess",
+    "description": "Replace with a short, personal blurb about this hobby.",
+    "icon": "Puzzle"
+  }
+]

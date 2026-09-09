@@ -28,22 +28,22 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 
 | ID | User Story | Acceptance Criteria | Priority | Status |
 |---|---|---|---|---|
-| ST-011 | As a Forker, I want `site.config.json` with a typed schema and loader, so site-wide settings are structured and validated. | Interface + zod schema + loader implemented per §5. | Must | Pending |
-| ST-012 | As a Forker, I want `personal.json` with a typed schema and loader, so my identity/bio content is structured and validated. | Same as above for `Personal`. | Must | Pending |
-| ST-013 | As a Forker, I want `experience.json` with a typed schema and loader, so my work history is structured and validated. | Schema covers company/role/dates/highlights[]. | Must | Pending |
-| ST-014 | As a Forker, I want `education.json` with a typed schema and loader, so my education history is structured and validated. | Schema covers institution/degree/field/dates. | Must | Pending |
-| ST-015 | As a Forker, I want `skills.json` with a typed schema and loader, so skills render by category with proficiency. | Schema covers category → items with proficiency. | Must | Pending |
-| ST-016 | As a Forker, I want `certifications.json` with a typed schema and loader, so certifications appear on the Resume page. | Schema + loader implemented. | Must | Pending |
-| ST-017 | As a Forker, I want `awards.json` with a typed schema and loader, so awards/achievements appear on the Resume page. | Schema + loader implemented. | Must | Pending |
-| ST-018 | As a Forker, I want `projects.json` with a typed schema and loader, so my projects render as cards. | Schema matches `Project` interface in §5. | Must | Pending |
-| ST-019 | As a Forker, I want `hobbies.json` with a typed schema and loader, so my hobbies render as a section. | Schema + loader implemented. | Must | Pending |
-| ST-020 | As a Forker, I want `testimonials.json` with a typed schema and loader, so quotes render as a section. | Schema covers name/role/company/quote/avatar. | Must | Pending |
-| ST-021 | As a Forker, I want `socials.json` with a typed schema and loader, so social links render in header/footer/contact. | Schema covers platform/url/icon. | Must | Pending |
-| ST-022 | As a Maintainer, I want blog posts authored as Markdown files with frontmatter, parsed at build time, so I can write posts without a CMS. | `content/blog/*.md` parsed for title/date/tags/excerpt + body. | Must | Pending |
-| ST-023 | As a Forker, I want every JSON file to ship with realistic placeholder data, so the app looks complete immediately after cloning. | Fresh clone renders every section fully populated before any edits. | Must | Pending |
-| ST-024 | As a Forker, I want a clear validation error at dev/build time when a data file doesn't match its schema, so I know exactly what to fix instead of seeing a blank page. | Malformed JSON produces a readable error naming file + field. | Should | Pending |
-| ST-098 *(added in validation pass)* | As a Forker, I want to set a custom favicon via `site.config.json.favicon`, so the browser tab icon reflects my brand instead of a generic default. | Changing the config value changes the built `<link rel="icon">`. | Should | Pending |
-| ST-103 *(added after questionnaire)* | As a Forker, I want `gallery.json` with a typed schema and loader (image path + title per entry), so my Gallery section (ST-060) is structured and validated like every other content type. | Schema + loader implemented; images referenced live under `public/gallery/`. | Must | Pending |
+| ST-011 | As a Forker, I want `site.config.json` with a typed schema and loader, so site-wide settings are structured and validated. | Interface + zod schema + loader implemented per §5. | Must | **Done** |
+| ST-012 | As a Forker, I want `personal.json` with a typed schema and loader, so my identity/bio content is structured and validated. | Same as above for `Personal`. | Must | **Done** *(real content adapted from roopesht.github.io)* |
+| ST-013 | As a Forker, I want `experience.json` with a typed schema and loader, so my work history is structured and validated. | Schema covers company/role/dates/highlights[]. | Must | **Done** *(real content)* |
+| ST-014 | As a Forker, I want `education.json` with a typed schema and loader, so my education history is structured and validated. | Schema covers institution/degree/field/dates. | Must | **Done** *(real content)* |
+| ST-015 | As a Forker, I want `skills.json` with a typed schema and loader, so skills render by category with proficiency. | Schema covers category → items with proficiency. | Must | **Done** *(real content; rendering as bars lands with Epic 5)* |
+| ST-016 | As a Forker, I want `certifications.json` with a typed schema and loader, so certifications appear on the Resume page. | Schema + loader implemented. | Must | **Done** *(placeholder data; no real source)* |
+| ST-017 | As a Forker, I want `awards.json` with a typed schema and loader, so awards/achievements appear on the Resume page. | Schema + loader implemented. | Must | **Done** *(placeholder data; no real source)* |
+| ST-018 | As a Forker, I want `projects.json` with a typed schema and loader, so my projects render as cards. | Schema matches `Project` interface in §5. | Must | **Done** *(placeholder data)* |
+| ST-019 | As a Forker, I want `hobbies.json` with a typed schema and loader, so my hobbies render as a section. | Schema + loader implemented. | Must | **Done** *(placeholder data)* |
+| ST-020 | As a Forker, I want `testimonials.json` with a typed schema and loader, so quotes render as a section. | Schema covers name/role/company/quote/avatar. | Must | **Done** *(placeholder data)* |
+| ST-021 | As a Forker, I want `socials.json` with a typed schema and loader, so social links render in header/footer/contact. | Schema covers platform/url/icon. | Must | **Done** *(real GitHub + website links)* |
+| ST-022 | As a Maintainer, I want blog posts authored as Markdown files with frontmatter, parsed at build time, so I can write posts without a CMS. | `content/blog/*.md` parsed for title/date/tags/excerpt + body. | Must | **Done** |
+| ST-023 | As a Forker, I want every JSON file to ship with realistic placeholder data, so the app looks complete immediately after cloning. | Fresh clone renders every section fully populated before any edits. | Must | **Done** *(data loads and validates cleanly; actual section rendering lands with Epic 5)* |
+| ST-024 | As a Forker, I want a clear validation error at dev/build time when a data file doesn't match its schema, so I know exactly what to fix instead of seeing a blank page. | Malformed JSON produces a readable error naming file + field. | Should | **Done** |
+| ST-098 *(added in validation pass)* | As a Forker, I want to set a custom favicon via `site.config.json.favicon`, so the browser tab icon reflects my brand instead of a generic default. | Changing the config value changes the built `<link rel="icon">`. | Should | **Done** *(custom Vite plugin injects it into `index.html` at build/dev time)* |
+| ST-103 *(added after questionnaire)* | As a Forker, I want `gallery.json` with a typed schema and loader (image path + title per entry), so my Gallery section (ST-060) is structured and validated like every other content type. | Schema + loader implemented; images referenced live under `public/gallery/`. | Must | **Done** |
 
 ## Epic 3 — Theming System
 
