@@ -4,6 +4,8 @@
 
 Build a personal portfolio/profile web app that is significantly more visually engaging than the current [roopesht.github.io](https://roopesht.github.io) (which is a plain, text-only single-page resume). Beyond serving as Roopesh's own site, the repo is designed as a **public, forkable template**: anyone can fork it, edit a handful of JSON files, run a setup script, and deploy their own portfolio to GitHub Pages — with no root-user-page assumptions baked in, and every configurable value visible and overridable by the forker.
 
+**Target audience: Gen Z (ages 20–28)**, early-career professionals using this to land a job. This shapes tone, typography, and motion choices across the design (see §6) — the design should feel current and energetic to this age group, not like a traditional corporate resume site.
+
 ## 2. Reference Analysis — current site
 
 Captured from https://roopesht.github.io for contrast, not to be replicated:
@@ -115,11 +117,11 @@ All JSON files ship with **realistic placeholder/sample data** (standard resume 
 
 ## 6. Theming System
 
-- Ships with **4 default themes**, selectable at runtime by the visitor via a theme switcher in the header:
-  1. **Modern Minimal** — light, generous whitespace, single bold accent color, large clean type.
-  2. **Dark Tech** — dark background, monospace/code accents, glow highlights — "engineer/founder" feel.
-  3. **Vibrant Creative** — gradients, color, more motion — stands out, less corporate.
-  4. **Blue Professional** — light, corporate-safe navy/blue palette, conservative type.
+- Ships with **4 default themes**, selectable at runtime by the visitor via a theme switcher in the header. Per the Gen Z target audience (§1), **3 of the 4 lean into current, energetic Gen Z visual trends**; **Blue Professional is the deliberate exception** — kept conservative for anyone who wants a safer, recruiter-formal look:
+  1. **Modern Minimal** — light, bold oversized type, one loud accent color, chunky rounded shapes/thick borders (soft-brutalist touches rather than sterile whitespace-only minimalism) — clean but with personality.
+  2. **Dark Tech** — dark background, monospace/code accents, neon glow highlights, subtle cyberpunk/synthwave edge — "builder/founder" feel that reads as current, not just "dark mode."
+  3. **Vibrant Creative** — gradient mesh backgrounds, duotone imagery, glassmorphism cards, playful blob/shape accents — the most maximalist and trend-forward of the four.
+  4. **Blue Professional** — light, corporate-safe navy/blue palette, conservative type, minimal motion — intentionally **not** Gen-Z-styled; the "safe default" option.
 - Themes are implemented as CSS-variable token sets (shadcn/ui convention: `--background`, `--foreground`, `--primary`, `--accent`, `--radius`, etc.), one file per theme under `src/themes/`.
 - **Extensible by design**: adding a 5th theme means adding one token file and one entry in `site.config.json.availableThemes` — no component code changes required.
 - Selected theme persists per-visitor via `localStorage`; falls back to `defaultTheme` from config, independent of OS light/dark preference (each theme is a complete palette, not just a light/dark pair).
@@ -139,7 +141,7 @@ The template must not assume it will live at a root user page (`username.github.
 
 1. Fork / use-this-template on GitHub.
 2. Clone locally.
-3. Run `npm install && npm run setup` — an interactive CLI (Node script, e.g. using `prompts`) that asks for: site title, your name/title/tagline, GitHub repo name (used to derive `basePath`), contact email, social links, and default theme — then writes these directly into `site.config.json` / `personal.json` / `socials.json` and updates `package.json` (`name`, `homepage`).
+3. Run `npm install && npm run setup` — an interactive CLI (Node script, e.g. using `prompts`) that asks for: site title, your name/title/tagline, GitHub username, GitHub repo name (used to derive `basePath` and, combined with the username, `package.json.homepage`), contact email, social links, and default theme — then writes these directly into `site.config.json` / `personal.json` / `socials.json` and updates `package.json` (`name`, `homepage`).
 4. Edit the remaining `src/data/*.json` files (experience, projects, hobbies, etc.) and `content/blog/*.md` with real content — placeholders show the expected shape.
 5. `npm run dev` to preview locally.
 6. Push to `main` — GitHub Actions workflow builds and deploys to GitHub Pages automatically (see §9).
@@ -188,16 +190,26 @@ Goal: someone with no React experience can update content confidently; someone w
 The template carries a permanent, non-configurable attribution badge promoting OjasaMirai ("training industry-ready professionals"), the site owner's training institute. Unlike every other piece of content, this is **not** a forker-editable data file — it's intentionally outside the JSON customization path so a fork retains it by default.
 
 - **Placement**: global footer, rendered on every page.
-- **Content**: OjasaMirai logo (`https://images.ojasamirai.com/ojasa/common/logo.png`), tagline text ("Trained at OjasaMirai — training industry-ready professionals", exact copy TBD-final), link to `https://ojasamirai.com` (`target="_blank" rel="noopener noreferrer"`).
+- **Content**: OjasaMirai logo (`https://images.ojasamirai.com/ojasa/common/logo.png`), final locked tagline text **"Trained at OjasaMirai — training industry-ready professionals"**, link to `https://ojasamirai.com` (`target="_blank" rel="noopener noreferrer"`). Rendered compact — logo + tagline inline, single line.
 - **Implementation**: hardcoded directly in the core `Footer` component — not read from `site.config.json` or any other `src/data/*.json` file, so it cannot be turned off via normal content editing.
 - **Styling**: adapts visually to each of the 4 active themes (uses the same CSS-variable tokens as the rest of the site) so it reads as a native, intentional part of the design in every theme, not a bolted-on ad.
 - **Enforcement**: a dedicated automated test (e.g. Vitest + React Testing Library) asserts the `Footer` renders the exact logo `src`, link `href`, and link text. This test runs in the PR build-check workflow (Epic 8 / §9) and the test must pass for CI to go green — removing or altering the badge breaks the build, not just "looks different."
 - **Transparency**: the README/Maintainer Guide explicitly documents that this badge exists, why, and that it's enforced by CI — so forkers understand it upfront rather than discovering it as a surprise build failure.
 - Not intended as a hard technical impossibility to remove (anyone can edit source and delete the test too) — the goal is: out of the normal customization path, attractive enough to want to keep, and backed by a CI check that makes casual removal immediately visible as a broken build.
 
-## 14. Open Assumptions to Confirm During Build
+## 14. In-App Customize Guide Page
+
+A dedicated in-app page (not just README/Maintainer Guide) explaining how to customize the site, so a forker sees orientation immediately when running the app, without leaving the browser.
+
+- **Route**: e.g. `/customize` — a real page in the app, built the same way as any other section.
+- **Content**: plain-language walkthrough covering which `src/data/*.json` file to edit for each section, how to add a blog post, how to add/register a new theme, how to use `site.config.json.navigation` to enable/disable/reorder sections, and how to run `npm run setup`. This mirrors the Maintainer Guide (§11) but lives inside the running app itself.
+- **Visibility toggle**: controlled by a new `site.config.json` flag, e.g. `showCustomizeGuide: boolean` — **default `true`** so it's visible out of the box on a fresh clone. The forker flips it to `false` once done customizing, before sharing the live link (e.g. with recruiters), to remove the nav link advertising it — the route itself still works if visited directly; this only stops pointing visitors at it.
+- Linked from the **main header nav** (not footer-only) while the flag is `true`.
+- Unlike the OjasaMirai badge (§13), this page is fully forker-controlled — it's meant to be turned off, not protected.
+
+## 15. Open Assumptions to Confirm During Build
 
 - Blog posts are static Markdown parsed at build time (no pagination/CMS) — flag if a different approach is wanted once the Blog section is actually built.
 - Contact form uses Formspree as the default provider; swappable via `site.config.json.contactForm.provider` if another static-form service is preferred.
 - `docs/` now holds planning documentation (requirements, assumptions, stories, tech stack) rather than being a GitHub Pages build source — confirmed, no longer an open assumption.
-- Exact OjasaMirai tagline wording is still being finalized (see §13) — current draft: "Trained at OjasaMirai — training industry-ready professionals."
+- All remaining open decisions were resolved via `docs/questionnaire.md` (2026-09-09) — see that file and the updated `docs/stories.md` for the final, locked answers (site IA, theme colors/fonts, nav behavior, content section details, OjasaMirai tagline, license holder, etc.). Nothing is open at this point; per-epic build specs live in `docs/stories/epic-*.md`.

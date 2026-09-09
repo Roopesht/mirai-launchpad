@@ -6,6 +6,8 @@ Roles used: **Visitor** (views the deployed site), **Forker** (clones the templa
 
 Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (nice-to-have).
 
+> **Validation pass (2026-09-09):** reviewed every story for contradictions/gaps. Fixed: ST-071 now runs tests (not just build), so it actually covers the ST-092 attribution test; ST-067 now explicitly writes `basePath`; ST-082 clarifies the OjasaMirai badge (Epic 11) is an intentional, documented exception, not a violation. Added two missing stories: ST-098 (favicon config) and ST-099 (in-app 404 page, distinct from the GitHub Pages redirect trick). Remaining open decisions — things no story fixes because they're genuinely your call — are collected in `docs/questionnaire.md`.
+
 ## Epic 1 — Project Scaffolding & Tooling
 
 | ID | User Story | Acceptance Criteria | Priority | Status |
@@ -20,6 +22,7 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 | ST-008 | As a Maintainer, I want zod installed with a shared validation utility, so JSON content can be runtime-validated. | Utility function exists and is reused by every data loader. | Must | Pending |
 | ST-009 | As a Maintainer, I want ESLint + Prettier configured, so code style stays consistent across contributions/forks. | Lint script passes on a clean checkout. | Should | Pending |
 | ST-010 | As a Maintainer, I want a sensible `.gitignore` (node_modules, dist, .env), so build artifacts and secrets aren't committed. | File present and effective. | Must | Pending |
+| ST-104 *(added in second validation pass)* | As a Maintainer, I want Vitest + React Testing Library installed and configured with an `npm test` script, so ST-071 (PR checks) and ST-092 (OjasaMirai badge test) have something to actually run. | `npm test` runs successfully on a clean clone, even with zero tests written yet. | Must | Pending |
 
 ## Epic 2 — Data Layer & Schemas
 
@@ -39,16 +42,20 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 | ST-022 | As a Maintainer, I want blog posts authored as Markdown files with frontmatter, parsed at build time, so I can write posts without a CMS. | `content/blog/*.md` parsed for title/date/tags/excerpt + body. | Must | Pending |
 | ST-023 | As a Forker, I want every JSON file to ship with realistic placeholder data, so the app looks complete immediately after cloning. | Fresh clone renders every section fully populated before any edits. | Must | Pending |
 | ST-024 | As a Forker, I want a clear validation error at dev/build time when a data file doesn't match its schema, so I know exactly what to fix instead of seeing a blank page. | Malformed JSON produces a readable error naming file + field. | Should | Pending |
+| ST-098 *(added in validation pass)* | As a Forker, I want to set a custom favicon via `site.config.json.favicon`, so the browser tab icon reflects my brand instead of a generic default. | Changing the config value changes the built `<link rel="icon">`. | Should | Pending |
+| ST-103 *(added after questionnaire)* | As a Forker, I want `gallery.json` with a typed schema and loader (image path + title per entry), so my Gallery section (ST-060) is structured and validated like every other content type. | Schema + loader implemented; images referenced live under `public/gallery/`. | Must | Pending |
 
 ## Epic 3 — Theming System
+
+> Target audience is Gen Z (20–28, see requirements §1). 3 of the 4 themes lean into current Gen Z visual trends; Blue Professional is the deliberate, non-Gen-Z "safe" exception.
 
 | ID | User Story | Acceptance Criteria | Priority | Status |
 |---|---|---|---|---|
 | ST-025 | As a Maintainer, I want a defined theme token contract (CSS variables for background/foreground/primary/accent/radius/font/etc.), so every theme implements the same interface. | Token list documented and enforced by a type/shape. | Must | Pending |
-| ST-026 | As a Visitor, I want a "Modern Minimal" theme, so I can view the site in a clean light style. | Token file implemented; visually matches description in §6. | Must | Pending |
-| ST-027 | As a Visitor, I want a "Dark Tech" theme, so I can view the site in a dark, code-accented style. | Token file implemented; visually matches description in §6. | Must | Pending |
-| ST-028 | As a Visitor, I want a "Vibrant Creative" theme, so I can view the site in a colorful, energetic style. | Token file implemented; visually matches description in §6. | Must | Pending |
-| ST-029 | As a Visitor, I want a "Blue Professional" theme, so I can view the site in a conservative corporate style. | Token file implemented; visually matches description in §6. | Must | Pending |
+| ST-026 | As a Gen Z Visitor, I want a "Modern Minimal" theme with bold oversized type and soft-brutalist touches (thick borders, chunky rounded shapes, one loud accent), so it feels clean but still current, not sterile/corporate. | Token file implemented; visually matches the Gen-Z-leaning description in §6. | Must | Pending |
+| ST-027 | As a Gen Z Visitor, I want a "Dark Tech" theme with neon glow and a cyberpunk/synthwave edge, so dark mode feels current rather than generic. | Token file implemented; visually matches the Gen-Z-leaning description in §6. | Must | Pending |
+| ST-028 | As a Gen Z Visitor, I want a "Vibrant Creative" theme with gradient mesh backgrounds, glassmorphism, and playful shapes, so it's the most maximalist, trend-forward option. | Token file implemented; visually matches the Gen-Z-leaning description in §6. | Must | Pending |
+| ST-029 | As a Visitor who wants a conservative look, I want a "Blue Professional" theme that stays corporate-safe (not Gen-Z-styled), so there's a safer default available for more formal contexts. | Token file implemented; intentionally excluded from the Gen-Z redesign pass. | Must | Pending |
 | ST-030 | As a Visitor, I want a visible theme switcher control, so I can change the site's look. | Control present in header on every page. | Must | Pending |
 | ST-031 | As a Visitor, I want my theme choice applied instantly across the whole site, so the switch feels immediate. | Selecting a theme updates all CSS variables without reload. | Must | Pending |
 | ST-032 | As a Visitor, I want my theme choice remembered on return visits, so I don't have to reselect it every time. | Choice persisted in `localStorage`, restored on load, falls back to `defaultTheme`. | Must | Pending |
@@ -60,9 +67,9 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 
 | ID | User Story | Acceptance Criteria | Priority | Status |
 |---|---|---|---|---|
-| ST-036 | As a Visitor, I want a global header showing the site owner's name/title and navigation, so I can orient and move around the site. | Header present on every route, pulls from `personal.json`. | Must | Pending |
+| ST-036 | As a Visitor, I want a global header showing the site owner's name/title (text wordmark) and navigation, that condenses/shrinks as I scroll down, so I can orient, move around the site, and get more screen space while reading. | Header present on every route, pulls from `personal.json`; visibly shrinks (height/padding) past a scroll threshold. | Must | Pending |
 | ST-037 | As a Forker, I want nav items rendered from `site.config.json.navigation` (respecting `enabled`/`order`), so I can turn sections on/off or reorder them without editing components. | Disabling/reordering an entry changes rendered nav and available routes. | Must | Pending |
-| ST-038 | As a Visitor on mobile, I want a collapsible nav (hamburger/drawer), so navigation doesn't break the layout on small screens. | Nav collapses below a defined breakpoint and is usable. | Must | Pending |
+| ST-038 | As a Visitor on mobile, I want a bottom tab bar for primary navigation, so moving between sections feels app-like and thumb-reachable. | A fixed bottom tab bar renders below a defined breakpoint, replacing the desktop header nav, and is usable. | Must | Pending |
 | ST-039 | As a Visitor, I want a footer with social links and copyright, so I can find contact info from any page. | Footer present on every route, pulls from `socials.json`/`personal.json`. | Should | Pending |
 | ST-040 | As a Visitor using assistive tech, I want a skip-to-content link and landmark regions, so I can navigate efficiently. | Skip link present; `header`/`nav`/`main`/`footer` landmarks used. | Should | Pending |
 
@@ -78,18 +85,19 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 | ST-046 | As a Visitor, I want the Resume page to list education, so I can review academic background. | Renders `education.json`. | Must | Pending |
 | ST-047 | As a Visitor, I want the Resume page to list certifications, so I can see verified credentials. | Renders `certifications.json`. | Should | Pending |
 | ST-048 | As a Visitor, I want the Resume page to list awards/achievements, so I can see recognitions. | Renders `awards.json`. | Should | Pending |
-| ST-049 | As a Visitor, I want a "Download PDF" button on the Resume page, so I can save/print an offline copy. | Button links to `personal.resumePdfUrl`, opens/downloads correctly. | Must | Pending |
+| ST-049 | As a Visitor, I want a "Download PDF" button on the Resume page, so I can save/print an offline copy. | Button links to `personal.resumePdfUrl`, opens/downloads correctly; button is **hidden entirely** (not shown disabled) when `resumePdfUrl` is unset — relevant for the placeholder-data case. | Must | Pending |
+| ST-100 *(added after questionnaire)* | As a Visitor, I want a full-height Hero section at the top of the home page (name, tagline, CTA buttons: "View Resume" / "See Projects" / "Let's talk"), so I immediately understand who the site belongs to and where to go next. | Hero renders above About on the home page; each CTA navigates to its target route. | Must | Pending |
 | ST-050 | As a Visitor, I want a Projects section showing a grid of project cards, so I can browse the site owner's work. | Renders `projects.json` as a responsive card grid. | Must | Pending |
 | ST-051 | As a Visitor, I want each project card to show title, description, tech tags, links, and optional image, so I can evaluate a project at a glance. | Card renders all populated `Project` fields; missing optional fields degrade gracefully. | Must | Pending |
-| ST-052 | As a Visitor, I want featured projects visually highlighted, so I see the most important work first. | `featured: true` projects are visually distinguished and/or sorted first. | Should | Pending |
+| ST-052 | As a Visitor, I want featured projects shown first, so I see the most important work without scrolling. | `featured: true` projects are sorted before non-featured ones; no separate visual badge. | Should | Pending |
 | ST-053 | As a Visitor, I want a Hobbies section with icon/image + short blurb per hobby, so I get a personal, human view of the site owner. | Renders `hobbies.json` as a visual list/grid. | Must | Pending |
 | ST-054 | As a Visitor, I want a Blog list page showing post title/date/tags/excerpt, so I can browse available writing. | Renders all parsed posts sorted by date descending. | Must | Pending |
 | ST-055 | As a Visitor, I want a Blog post detail page rendering full content, so I can read a full article. | Markdown body rendered with correct formatting at `/blog/:slug`. | Must | Pending |
-| ST-056 | As a Visitor, I want a Testimonials section showing quotes with name/role/company/avatar, so I can see third-party endorsement. | Renders `testimonials.json` as cards or carousel. | Should | Pending |
+| ST-056 | As a Visitor, I want a Testimonials section showing quotes with name/role/company/avatar, so I can see third-party endorsement. | Renders `testimonials.json` as a static grid of cards (no carousel/auto-rotation). | Should | Pending |
 | ST-057 | As a Visitor, I want a Contact section showing email and social links, so I know how to get in touch. | Renders `personal.email` + `socials.json`. | Must | Pending |
-| ST-058 | As a Visitor, I want a working contact form, so I can send a message directly from the site. | Form submits to the configured Formspree endpoint from `site.config.json.contactForm`. | Should | Pending |
+| ST-058 | As a Visitor, I want a working contact form, so I can send a message directly from the site. | Form has name + email + message fields (no subject field); submits to the configured Formspree endpoint from `site.config.json.contactForm`. | Should | Pending |
 | ST-059 | As a Visitor, I want clear success/error feedback after submitting the contact form, so I know whether my message went through. | UI shows a distinct success state and a distinct error state. | Should | Pending |
-| ST-060 | As a Visitor, I want a Gallery/Now block near Contact, so I can see photos or current focus areas. | Renders configured gallery images or "now" text block. | Could | Pending |
+| ST-060 | As a Visitor, I want a titled photo Gallery section near Contact, so I can see images the site owner has chosen to share, each with a caption. | Renders `gallery.json` entries (image + title) as a grid; images committed under `public/gallery/`. | Must | Pending |
 
 ## Epic 6 — Routing & GitHub Pages Compatibility
 
@@ -100,14 +108,15 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 | ST-063 | As a Visitor, I want deep links (e.g. `/projects`) to work on refresh/direct visit, so shared URLs don't 404. | Build step copies `index.html` to `404.html`; verified on a deployed project-page URL. | Must | Pending |
 | ST-064 | As a Forker, I want all asset references to be relative/base-aware, so the same build works unmodified at `/` or `/repo-name/`. | No hardcoded root-relative asset paths in source; verified in both deployment shapes. | Must | Pending |
 | ST-065 | As a Forker, I want optional custom-domain support via a `CNAME` file, so I can use my own domain if I want one. | `CNAME` absent by default; documented how to add it. | Could | Pending |
+| ST-099 *(added in validation pass)* | As a Visitor who follows a dead/invalid link, I want a real in-app "page not found" view (distinct from the GitHub Pages 404.html redirect trick in ST-063), so a genuinely bad URL gets a helpful page instead of a blank screen. | A catch-all React Router route renders a styled Not Found page with a link back home. | Should | Pending |
 
 ## Epic 7 — Fork & Setup Workflow
 
 | ID | User Story | Acceptance Criteria | Priority | Status |
 |---|---|---|---|---|
-| ST-066 | As a Forker, I want an interactive `npm run setup` CLI, so I can enter my details once instead of hand-editing multiple JSON files. | Script prompts for site title, name/title/tagline, repo name, email, socials, default theme. | Must | Pending |
-| ST-067 | As a Forker, I want the setup script to write my answers into `site.config.json`/`personal.json`/`socials.json`, so my inputs take effect immediately. | Files updated correctly after running the script. | Must | Pending |
-| ST-068 | As a Forker, I want the setup script to update `package.json` `name`/`homepage`, so packaging metadata matches my fork. | Fields updated to match provided repo/site info. | Should | Pending |
+| ST-066 | As a Forker, I want an interactive `npm run setup` CLI, so I can enter my details once instead of hand-editing multiple JSON files. | Script prompts for site title, name/title/tagline, **GitHub username**, repo name, email, socials, default theme. | Must | Pending |
+| ST-067 | As a Forker, I want the setup script to write my answers into `site.config.json` (including a `basePath` computed from my repo name)/`personal.json`/`socials.json`, so my inputs take effect immediately. | Files updated correctly after running the script; `basePath` matches the entered repo name. | Must | Pending |
+| ST-068 | As a Forker, I want the setup script to update `package.json` `name`/`homepage` (`homepage` built from my GitHub username + repo name, e.g. `https://<username>.github.io/<repo>/`), so packaging metadata and the live-URL link in README are correct. | Fields updated to match provided username/repo/site info. | Should | Pending |
 | ST-069 | As a Forker, I want the setup script to be safely re-runnable, so I can correct earlier answers without corrupting my data. | Running it twice doesn't duplicate/corrupt entries; existing values shown as defaults. | Should | Pending |
 
 ## Epic 8 — CI/CD & Deployment
@@ -117,7 +126,7 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 | ID | User Story | Acceptance Criteria | Priority | Status |
 |---|---|---|---|---|
 | ST-070 | As a Forker, I want a GitHub Actions workflow that builds and deploys to GitHub Pages on push to `main`, so publishing is automatic. | `.github/workflows/deploy.yml` runs `npm ci && npm run build` then deploys `dist/` via `actions/upload-pages-artifact` + `actions/deploy-pages`. | Must | Pending |
-| ST-071 | As a Forker, I want pull requests to run a build-only CI check, so broken content/config is caught before merge. | PR workflow runs `npm run build` without deploying; fails PR on build error. | Should | Pending |
+| ST-071 | As a Forker, I want pull requests to run a build + test CI check, so broken content/config or a failed attribution test (ST-092) is caught before merge. | PR workflow runs `npm run build` and `npm test` without deploying; fails PR on either error. | Should | Pending |
 | ST-072 | As a Forker, I want the deploy workflow to require no committed build artifacts, so `dist/`, `gh-pages` branch, etc. never need manual upkeep. | No build output committed to the repo; verified `.gitignore` excludes `dist/`. | Must | Pending |
 | ST-073 | As a Maintainer, I want the legacy empty `docs/` build-folder usage removed/clarified now that it holds planning docs instead, so there's no confusion about which deploy method is active. | README/workflow make clear `docs/` is documentation-only, not a Pages source. | Should | Pending |
 
@@ -133,7 +142,9 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 | ST-079 | As a Maintainer, I want a generated `sitemap.xml`, so search engines can discover all pages. | Generated at build time, includes all routes. | Could | Pending |
 | ST-080 | As a Maintainer, I want a `robots.txt`, so crawler behavior is explicit. | Included in build output. | Could | Pending |
 | ST-081 | As a Visitor, I want a print-friendly Resume view, so I can print or export it cleanly. | Dedicated print stylesheet (or print-optimized view) produces a clean printed page. | Should | Pending |
-| ST-082 | As a Forker, I want a fresh clone with only placeholder data to build and deploy with zero errors, and no personal data hardcoded outside `src/data`/`content`, so forking is safe and reliable. | Clean clone → setup skipped → `npm run build` succeeds; grep confirms no PII outside those directories. | Must | Pending |
+| ST-082 | As a Forker, I want a fresh clone with only placeholder data to build and deploy with zero errors, and no *personal* data hardcoded outside `src/data`/`content`, so forking is safe and reliable. | Clean clone → setup skipped → `npm run build` succeeds; grep confirms no PII outside those directories. (The OjasaMirai badge, Epic 11, is an intentional, documented exception — it's institutional attribution, not personal data, and is deliberately hardcoded outside `src/data`.) | Must | Pending |
+| ST-101 *(added after questionnaire)* | As a Maintainer, I want an optional GA4 page-view tracking snippet driven by `site.config.json.analytics` (provider + measurement ID), so I can see visit counts without adding any other tracking. | Snippet loads only when a measurement ID is configured; tracks page views only, no events/e-commerce. | Should | Pending |
+| ST-102 *(added after questionnaire)* | As a Forker, I want the in-app Customize page (Epic 12) to document how to get and set a GA4 measurement ID, so enabling analytics doesn't require reading external docs. | Customize page content includes a short GA4 setup walkthrough. | Should | Pending |
 
 ## Epic 10 — Documentation Deliverables
 
@@ -157,3 +168,14 @@ See requirements.md §13. Intentionally outside the normal fork-customization pa
 | ST-091 | As a Visitor, I want the badge to visually adapt to whichever of the 4 themes is active, so it reads as a native part of the design rather than a bolted-on ad. | Badge uses the active theme's CSS-variable tokens (colors/radius/font); verified across all 4 themes. | Must | Pending |
 | ST-092 | As the Publisher, I want an automated test that fails the build if the badge's logo, link, or text is removed or altered, so casual removal is caught by CI, not silently shipped. | A Vitest + React Testing Library test asserts the exact logo `src`, link `href`, and link text render in `Footer`; wired into the PR build-check workflow (Epic 8) and must pass for CI to go green. | Must | Pending |
 | ST-093 | As a Forker, I want the README/Maintainer Guide to explicitly explain the OjasaMirai badge and that it's CI-enforced, so I understand it upfront rather than hitting a surprise failed build. | README and `MAINTAINER-GUIDE.md` each contain a short, clearly-labeled section on this badge and why it's protected. | Must | Pending |
+
+## Epic 12 — In-App Customize Guide Page
+
+See requirements.md §14. Unlike the OjasaMirai badge, this is fully forker-controlled and meant to be turned off.
+
+| ID | User Story | Acceptance Criteria | Priority | Status |
+|---|---|---|---|---|
+| ST-094 | As a Forker, I want an in-app "Customize" page reachable at a real route (e.g. `/customize`) and linked from the main header nav, so I get oriented on how to personalize the site without leaving the browser or reading the README first. | Page renders at its route with the same layout/theme system as other pages; linked from the main nav (not just footer) when enabled. | Must | Pending |
+| ST-095 | As a Forker, I want the Customize page to explain which JSON file to edit per section, how to add a blog post, how to add/register a theme, how to toggle sections via `site.config.json.navigation`, how to run `npm run setup`, and how to configure GA4 analytics (ST-102), so I have one place that covers the essentials. | Page content covers all six items listed. | Must | Pending |
+| ST-096 | As a Forker, I want to hide the Customize page's nav/footer link via a `site.config.json.showCustomizeGuide` flag, so I can stop advertising it once I'm done customizing and ready to share the live link. | Setting the flag to `false` removes the nav/footer link; the `/customize` route itself still works if visited directly (not a 404) — it's just no longer advertised. | Must | Pending |
+| ST-097 | As a Forker on a fresh clone, I want `showCustomizeGuide` to default to `true`, so the guide is visible out of the box without extra setup. | Default value in shipped `site.config.json` is `true`. | Must | Pending |
