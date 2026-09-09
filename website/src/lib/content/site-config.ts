@@ -2,13 +2,11 @@ import { z } from 'zod'
 import { validateData } from '@/lib/validate-data'
 import raw from '@/data/site.config.json'
 
-export const themeIdSchema = z.enum([
-  'modern-minimal',
-  'dark-tech',
-  'vibrant-creative',
-  'blue-professional',
-])
-export type ThemeId = z.infer<typeof themeIdSchema>
+// Deliberately a plain string, not a hardcoded enum of the 4 shipped themes:
+// the set of *valid* theme ids is owned by the theme registry
+// (`src/themes/index.ts`), so a forker can add a 5th theme purely by adding
+// a token file + a config entry here, with no schema change (ST-035).
+const themeIdSchema = z.string()
 
 const navItemSchema = z.object({
   id: z.string(),
