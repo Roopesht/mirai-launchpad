@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from '@/lib/theme/ThemeProvider'
+import { SkipLink } from '@/components/layout/SkipLink'
 import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { MobileTabBar } from '@/components/layout/MobileTabBar'
 import { HomePage } from '@/pages/HomePage'
 import { ResumePage } from '@/pages/ResumePage'
 import { ProjectsPage } from '@/pages/ProjectsPage'
@@ -16,8 +19,9 @@ function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
+        <SkipLink />
         <Header />
-        <main>
+        <main id="main-content" className="pb-16 sm:pb-0">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/resume" element={<ResumePage />} />
@@ -31,6 +35,8 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
+        <Footer />
+        <MobileTabBar />
       </BrowserRouter>
     </ThemeProvider>
   )

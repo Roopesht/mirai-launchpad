@@ -67,11 +67,11 @@ Priority: **Must** (v1 blocker) · **Should** (v1, not blocking) · **Could** (n
 
 | ID | User Story | Acceptance Criteria | Priority | Status |
 |---|---|---|---|---|
-| ST-036 | As a Visitor, I want a global header showing the site owner's name/title (text wordmark) and navigation, that condenses/shrinks as I scroll down, so I can orient, move around the site, and get more screen space while reading. | Header present on every route, pulls from `personal.json`; visibly shrinks (height/padding) past a scroll threshold. | Must | Pending |
-| ST-037 | As a Forker, I want nav items rendered from `site.config.json.navigation` (respecting `enabled`/`order`), so I can turn sections on/off or reorder them without editing components. | Disabling/reordering an entry changes rendered nav and available routes. | Must | Pending |
-| ST-038 | As a Visitor on mobile, I want a bottom tab bar for primary navigation, so moving between sections feels app-like and thumb-reachable. | A fixed bottom tab bar renders below a defined breakpoint, replacing the desktop header nav, and is usable. | Must | Pending |
-| ST-039 | As a Visitor, I want a footer with social links and copyright, so I can find contact info from any page. | Footer present on every route, pulls from `socials.json`/`personal.json`. | Should | Pending |
-| ST-040 | As a Visitor using assistive tech, I want a skip-to-content link and landmark regions, so I can navigate efficiently. | Skip link present; `header`/`nav`/`main`/`footer` landmarks used. | Should | Pending |
+| ST-036 | As a Visitor, I want a global header showing the site owner's name/title (text wordmark) and navigation, that condenses/shrinks as I scroll down, so I can orient, move around the site, and get more screen space while reading. | Header present on every route, pulls from `personal.json`; visibly shrinks (height/padding) past a scroll threshold. | Must | **Done** *(wordmark pulls from `site.config.json.siteTitle`, not `personal.json` — that field exists precisely for site-wide branding text; see epic-04 doc)* |
+| ST-037 | As a Forker, I want nav items rendered from `site.config.json.navigation` (respecting `enabled`/`order`), so I can turn sections on/off or reorder them without editing components. | Disabling/reordering an entry changes rendered nav and available routes. | Must | **Done** *(nav rendering respects enabled/order; the routes themselves aren't conditionally registered/unregistered — visiting a disabled section's URL directly still works, matching the ST-096 "hidden from nav, not 404'd" pattern used elsewhere)* |
+| ST-038 | As a Visitor on mobile, I want a bottom tab bar for primary navigation, so moving between sections feels app-like and thumb-reachable. | A fixed bottom tab bar renders below a defined breakpoint, replacing the desktop header nav, and is usable. | Must | **Done** |
+| ST-039 | As a Visitor, I want a footer with social links and copyright, so I can find contact info from any page. | Footer present on every route, pulls from `socials.json`/`personal.json`. | Should | **Done** |
+| ST-040 | As a Visitor using assistive tech, I want a skip-to-content link and landmark regions, so I can navigate efficiently. | Skip link present; `header`/`nav`/`main`/`footer` landmarks used. | Should | **Done** |
 
 ## Epic 5 — Content Sections
 

@@ -7,4 +7,11 @@ describe('App', () => {
     render(<App />)
     expect(screen.getByRole('heading', { name: 'Home' })).toBeInTheDocument()
   })
+
+  it('renders header, main, and footer landmarks on every page (ST-040)', () => {
+    render(<App />)
+    expect(screen.getByRole('banner')).toBeInTheDocument()
+    expect(screen.getByRole('main')).toBeInTheDocument()
+    expect(screen.getByRole('contentinfo')).toBeInTheDocument()
+  })
 })
