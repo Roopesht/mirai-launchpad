@@ -2,13 +2,14 @@ import { MapPin } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { personal } from '@/lib/content/personal'
+import { withBase } from '@/lib/base-path'
 
 /** Full-height hero (ST-100): name + tagline + the 3 primary CTAs. */
 export function Hero() {
   return (
     <section className="flex min-h-[85svh] flex-col items-center justify-center gap-6 px-4 text-center">
       <img
-        src={personal.avatarUrl}
+        src={withBase(personal.avatarUrl)}
         alt={personal.name}
         width={128}
         height={128}

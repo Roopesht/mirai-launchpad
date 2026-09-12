@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import { Button } from '@/components/ui/button'
 import { PageTransition } from '@/components/motion/PageTransition'
 import { personal } from '@/lib/content/personal'
+import { withBase } from '@/lib/base-path'
 import { experience } from '@/lib/content/experience'
 import { education } from '@/lib/content/education'
 import { certifications } from '@/lib/content/certifications'
@@ -44,7 +45,7 @@ export function ResumePage() {
           </div>
           {personal.resumePdfUrl && (
             <Button asChild className="w-fit">
-              <a href={personal.resumePdfUrl} target="_blank" rel="noopener noreferrer">
+              <a href={withBase(personal.resumePdfUrl)} target="_blank" rel="noopener noreferrer">
                 Download PDF
               </a>
             </Button>

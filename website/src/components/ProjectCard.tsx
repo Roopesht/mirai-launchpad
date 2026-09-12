@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { withBase } from '@/lib/base-path'
 import type { Project } from '@/lib/content/projects'
 
 /**
@@ -14,7 +15,7 @@ export function ProjectCard({ project }: { project: Project }) {
     <Card className="overflow-hidden">
       {project.imageUrl && (
         <img
-          src={project.imageUrl}
+          src={withBase(project.imageUrl)}
           alt=""
           className="aspect-video w-full object-cover"
           loading="lazy"

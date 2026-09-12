@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { testimonials } from '@/lib/content/testimonials'
+import { withBase } from '@/lib/base-path'
 
 /** Testimonials section (ST-056) — static grid of cards, no carousel. */
 export function Testimonials() {
@@ -13,7 +14,7 @@ export function Testimonials() {
               <p className="text-sm text-foreground">&ldquo;{testimonial.quote}&rdquo;</p>
               <div className="flex items-center gap-3">
                 <img
-                  src={testimonial.avatar}
+                  src={withBase(testimonial.avatar)}
                   alt=""
                   width={32}
                   height={32}

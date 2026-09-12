@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from '@/lib/theme/ThemeProvider'
+import { siteConfig } from '@/lib/content/site-config'
+import { getRouterBasename } from '@/lib/base-path'
 import { SkipLink } from '@/components/layout/SkipLink'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -17,7 +19,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage'
 function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={getRouterBasename(siteConfig.basePath)}>
         <SkipLink />
         <Header />
         <main id="main-content" className="pb-16 sm:pb-0">

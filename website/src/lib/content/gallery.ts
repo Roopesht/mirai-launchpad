@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { validateData } from '@/lib/validate-data'
+import { withBase } from '@/lib/base-path'
 import raw from '@/data/gallery.json'
 
 const galleryEntrySchema = z.object({
@@ -18,5 +19,5 @@ export const gallery: GalleryEntry[] = validateData(
 
 /** Base-aware URL for a gallery image (files live under `public/gallery/`). */
 export function galleryImageSrc(imageFile: string): string {
-  return `${import.meta.env.BASE_URL}gallery/${imageFile}`
+  return withBase(`/gallery/${imageFile}`)
 }

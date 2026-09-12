@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { PageTransition } from '@/components/motion/PageTransition'
 import { getProjectById } from '@/lib/content/projects'
+import { withBase } from '@/lib/base-path'
 
 /** Project detail page (ST-050) — reached by clicking a project card. */
 export function ProjectDetailPage() {
@@ -30,7 +31,7 @@ export function ProjectDetailPage() {
 
         {project.imageUrl && (
           <img
-            src={project.imageUrl}
+            src={withBase(project.imageUrl)}
             alt=""
             className="aspect-video w-full rounded-[var(--radius)] object-cover"
           />
