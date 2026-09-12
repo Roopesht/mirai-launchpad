@@ -13,8 +13,13 @@ const experienceEntrySchema = z.object({
 
 export type ExperienceEntry = z.infer<typeof experienceEntrySchema>
 
-export const experience: ExperienceEntry[] = validateData(
+const parsedExperience: ExperienceEntry[] = validateData(
   z.array(experienceEntrySchema),
   raw,
   'src/data/experience.json',
+)
+
+// Most recent first (ST-045), regardless of entry order in the JSON file.
+export const experience: ExperienceEntry[] = [...parsedExperience].sort(
+  (a, b) => Number.parseInt(b.startDate, 10) - Number.parseInt(a.startDate, 10),
 )

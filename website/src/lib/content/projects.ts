@@ -25,3 +25,7 @@ const parsedProjects: Project[] = validateData(
 export const projects: Project[] = [...parsedProjects].sort(
   (a, b) => Number(b.featured) - Number(a.featured),
 )
+
+export function getProjectById(id: string): Project | undefined {
+  return projects.find((project) => project.id === id)
+}

@@ -1,7 +1,7 @@
 [
   {
     "id": "sample-project-1",
-    "title": "Sample Project One",
+    "title": "TV Guide",
     "description": "Replace with a real project description. A short paragraph explaining the problem, your approach, and the outcome works well here.",
     "tech": ["React", "TypeScript", "Node.js"],
     "repoUrl": "https://github.com/your-username/sample-project-one",

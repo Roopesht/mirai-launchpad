@@ -1,6 +1,6 @@
-import matter from 'gray-matter'
 import { z } from 'zod'
 import { validateData } from '@/lib/validate-data'
+import rawPosts from 'virtual:blog-posts'
 
 const frontmatterSchema = z.object({
   title: z.string(),
@@ -18,22 +18,10 @@ export interface BlogPost {
   content: string
 }
 
-const postFiles = import.meta.glob('/content/blog/*.md', {
-  eager: true,
-  query: '?raw',
-  import: 'default',
-}) as Record<string, string>
-
-function fileToSlug(path: string): string {
-  const filename = path.split('/').pop() ?? path
-  return filename.replace(/\.md$/, '')
-}
-
-const posts: BlogPost[] = Object.entries(postFiles).map(([path, raw]) => {
-  const slug = fileToSlug(path)
-  const { data, content } = matter(raw)
+// Frontmatter is already parsed at build/dev time by vite-plugin-blog-posts
+// (Node-side, via gray-matter) — this file only validates the shape.
+const posts: BlogPost[] = rawPosts.map(({ slug, data, content }) => {
   const frontmatter = validateData(frontmatterSchema, data, `content/blog/${slug}.md`)
-
   return { slug, ...frontmatter, content }
 })
 
