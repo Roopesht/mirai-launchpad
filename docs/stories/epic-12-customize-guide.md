@@ -17,3 +17,11 @@
 | ST-097 | Defaults to `true` | Must |
 
 Full acceptance criteria: `docs/stories.md` Epic 12.
+
+## Status
+
+Implemented out of epic order (done directly after Epic 6, before Epics 7–11) — there's no hard dependency: ST-094/096/097's nav/route mechanics were already in place as a side effect of Epic 4's `Header`/`MobileTabBar` work (they gate a "Customize" nav item on `site.config.json.showCustomizeGuide` and register `/customize` unconditionally in `App.tsx`), and Epic 2 already defaulted the flag to `true`. The only new work was ST-095: the actual page content (`src/pages/CustomizePage.tsx`), covering all 6 required topics in Card-per-topic layout.
+
+**Caveat worth tracking**: the content describes `npm run setup` (Epic 7) and the GA4 analytics snippet (Epic 9) — neither exists yet as working code at the time this page was written. This mirrors how `docs/stories.md` itself documents the locked target design ahead of implementation, so it's intentional, not an oversight — but it means this page's accuracy for those two topics depends on Epics 7 and 9 actually landing as described. Re-check this page's content against the real setup script and analytics wiring once those epics ship.
+
+Verified: a dedicated test (`App.customize-toggle.test.tsx`) mocks `showCustomizeGuide: false` and confirms the nav link disappears while `/customize` still renders the real page directly — proving ST-096's behavior, not just asserting it by construction. Screenshot-verified visually with zero console/network errors.
