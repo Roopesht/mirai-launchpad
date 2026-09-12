@@ -12,9 +12,7 @@ export function ProjectDetailPage() {
     return (
       <PageTransition>
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-4 py-16 text-center">
-          <h1 className="font-heading text-2xl font-semibold text-foreground">
-            Project not found
-          </h1>
+          <h1 className="font-heading text-2xl font-semibold text-foreground">Project not found</h1>
           <Link to="/projects" className="text-primary hover:underline">
             Back to projects
           </Link>

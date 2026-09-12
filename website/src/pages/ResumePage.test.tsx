@@ -13,7 +13,9 @@ describe('ResumePage (ST-043-049)', () => {
       'href',
       `mailto:${personal.email}`,
     )
-    const experienceHeadings = screen.getAllByRole('heading', { level: 3 }).map((h) => h.textContent)
+    const experienceHeadings = screen
+      .getAllByRole('heading', { level: 3 })
+      .map((h) => h.textContent)
     for (const entry of experience) {
       expect(experienceHeadings.some((text) => text?.includes(entry.company))).toBe(true)
     }

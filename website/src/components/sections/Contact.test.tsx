@@ -34,10 +34,7 @@ describe('Contact (ST-057, ST-058, ST-059)', () => {
 
   it('shows a success message after a successful submission', async () => {
     const user = userEvent.setup()
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve({}) }),
-    )
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve({}) }))
     render(<Contact />)
 
     await user.type(screen.getByLabelText('Name'), 'Ada Lovelace')
