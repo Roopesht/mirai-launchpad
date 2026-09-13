@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { PageTransition } from '@/components/motion/PageTransition'
+import { SetupGuideDialog } from '@/components/SetupGuideDialog'
 import { cn } from '@/lib/utils'
 
 interface DevTool {
@@ -55,6 +56,7 @@ export function CustomizePage() {
             Local-only tools for editing this site&rsquo;s content — nothing here touches the
             deployed site.
           </p>
+          <SetupGuideDialog />
         </div>
 
         <div

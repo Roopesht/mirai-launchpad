@@ -35,8 +35,13 @@ describe('CustomizePage (ST-111)', () => {
       '/dev/blog',
     ])
 
-    const disabledButtons = screen.getAllByRole('button')
+    const disabledButtons = screen.getAllByRole('button', { name: /Coming soon/i })
     expect(disabledButtons).toHaveLength(1) // More tools
     expect(disabledButtons[0]).toBeDisabled()
+  })
+
+  it('has a setup guide trigger (ST-083)', () => {
+    renderPage()
+    expect(screen.getByRole('button', { name: /Setup your profile/i })).toBeInTheDocument()
   })
 })
