@@ -12,7 +12,7 @@ export function ProficiencyBar({ label, value }: { label: string; value: number 
         aria-valuenow={value}
         aria-valuemin={0}
         aria-valuemax={5}
-        className="h-2 w-full overflow-hidden rounded-full bg-muted"
+        className="h-1 w-full overflow-hidden rounded-full bg-muted"
       >
         <div
           className="h-full rounded-full bg-primary"

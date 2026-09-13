@@ -22,8 +22,6 @@ describe('showCustomizeGuide: false (ST-096)', () => {
 
     window.history.pushState({}, '', `${siteConfig.basePath}customize`)
     render(<App />)
-    expect(
-      screen.getByRole('heading', { name: 'Customize this site', level: 1 }),
-    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Developer Tools', level: 1 })).toBeInTheDocument()
   })
 })

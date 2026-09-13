@@ -1,25 +1,39 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { CustomizePage } from './CustomizePage'
 
-describe('CustomizePage (ST-095)', () => {
-  it('covers all six customization topics', () => {
-    render(<CustomizePage />)
+function renderPage() {
+  return render(
+    <MemoryRouter>
+      <CustomizePage />
+    </MemoryRouter>,
+  )
+}
 
-    // Topic titles render via shadcn's CardTitle, which is a styled <div>,
-    // not a semantic heading element — so this checks text, not role.
-    expect(screen.getByText(/edit your content/i)).toBeInTheDocument()
-    expect(screen.getByText(/add a blog post/i)).toBeInTheDocument()
-    expect(screen.getByText(/add a theme/i)).toBeInTheDocument()
-    expect(screen.getByText(/toggle sections/i)).toBeInTheDocument()
-    expect(screen.getByText(/run the setup script/i)).toBeInTheDocument()
-    expect(screen.getByText(/configure analytics/i)).toBeInTheDocument()
+describe('CustomizePage (ST-111)', () => {
+  it('lists every dev tool, including a placeholder for future ones', () => {
+    renderPage()
+    expect(screen.getByText('JSON Content Editor')).toBeInTheDocument()
+    expect(screen.getByText('Blog Post Editor')).toBeInTheDocument()
+    expect(screen.getByText('More tools')).toBeInTheDocument()
   })
 
-  it('mentions the specific config keys a forker needs to edit', () => {
-    render(<CustomizePage />)
-    expect(screen.getByText('site.config.json.availableThemes')).toBeInTheDocument()
-    expect(screen.getAllByText('npm run setup').length).toBeGreaterThan(0)
-    expect(screen.getAllByText(/G-XXXXXXXXXX/).length).toBeGreaterThan(0)
+  it('shows a prominent, always-visible localhost-only notice', () => {
+    renderPage()
+    expect(screen.getByRole('alert')).toHaveTextContent(/npm run dev/i)
+  })
+
+  it('disables every tool button until its route is actually implemented', () => {
+    // vitest runs with import.meta.env.DEV === true, so this specifically
+    // proves the *unimplemented* tools stay disabled even in a dev build —
+    // not just "disabled because not running locally".
+    renderPage()
+    const buttons = screen.getAllByRole('button')
+    expect(buttons).toHaveLength(3)
+    for (const button of buttons) {
+      expect(button).toBeDisabled()
+    }
+    expect(screen.queryByRole('link', { name: 'Open' })).not.toBeInTheDocument()
   })
 })
