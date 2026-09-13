@@ -19,7 +19,7 @@ const tools: DevTool[] = [
     description: 'Edit src/data/*.json files, with schema validation before every save.',
     icon: Braces,
     href: '/dev/content',
-    implemented: false, // Epic 13 — flips to true once the route exists
+    implemented: true, // Epic 13
   },
   {
     title: 'Blog Post Editor',

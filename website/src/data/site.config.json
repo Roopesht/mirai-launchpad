@@ -17,7 +17,7 @@
   ],
   "contactForm": {
     "provider": "formspree",
-    "endpoint": "https://formspree.io/f/your-form-id"
+    "endpoint": "https://formspree.io/f/xljeydej"
   },
   "showCustomizeGuide": true
 }

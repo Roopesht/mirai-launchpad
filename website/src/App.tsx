@@ -1,4 +1,6 @@
+import { Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { devRoutes } from 'virtual:dev-routes'
 import { ThemeProvider } from '@/lib/theme/ThemeProvider'
 import { siteConfig } from '@/lib/content/site-config'
 import { getRouterBasename } from '@/lib/base-path'
@@ -32,6 +34,17 @@ function App() {
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/customize" element={<CustomizePage />} />
             <Route path="/theme-preview" element={<ThemePreviewPage />} />
+            {devRoutes.map(({ path, Component }) => (
+              <Route
+                key={path}
+                path={path}
+                element={
+                  <Suspense fallback={null}>
+                    <Component />
+                  </Suspense>
+                }
+              />
+            ))}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

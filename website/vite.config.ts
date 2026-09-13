@@ -7,6 +7,8 @@ import { defineConfig } from 'vite'
 import { faviconFromConfig } from './vite-plugin-favicon.ts'
 import { blogPosts } from './vite-plugin-blog-posts.ts'
 import { spaFallback404 } from './vite-plugin-spa-fallback.ts'
+import { contentEditor } from './vite-plugin-content-editor.ts'
+import { devRoutes } from './vite-plugin-dev-routes.ts'
 
 /**
  * Computes the deployed base path from GitHub Actions' automatic
@@ -41,7 +43,15 @@ export default defineConfig({
   define: {
     __BASE_PATH__: JSON.stringify(basePath),
   },
-  plugins: [react(), tailwindcss(), faviconFromConfig(), blogPosts(), spaFallback404()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    faviconFromConfig(),
+    blogPosts(),
+    spaFallback404(),
+    contentEditor(),
+    devRoutes(),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(import.meta.dirname, './src'),
