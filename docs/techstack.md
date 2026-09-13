@@ -20,7 +20,6 @@
 | Testing | React Testing Library | Component rendering assertions in tests. |
 | Linting | ESLint | Code-quality checks. |
 | Formatting | Prettier | Consistent code style. |
-| Setup CLI | prompts | Interactive `npm run setup` script for forkers. |
 | Package manager | npm | Dependency installation and scripts. |
 | CI/CD | GitHub Actions | Builds on push/PR, runs tests, deploys on merge to `main`. |
 | Deployment | actions/upload-pages-artifact, actions/deploy-pages | Publishes `dist/` to GitHub Pages. |

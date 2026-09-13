@@ -1,19 +1,25 @@
 # Epic 7 — Fork & Setup Workflow
 
-**Goal**: a forker goes from clone to configured site with one CLI run.
+**Status: entire epic superseded, 2026-09-13 — should not be implemented.**
 
-## Locked decisions
-- `npm run setup` (Node + `prompts`) asks for: site title, name/title/tagline, **GitHub username**, GitHub repo name, contact email, socials, default theme.
-- Script computes and writes `basePath` into `site.config.json` from the entered repo name.
-- Updates `package.json` `name`/`homepage` — `homepage` is built from username + repo name (`https://<username>.github.io/<repo>/`), which also feeds the live-URL link in README.
-- Safely re-runnable — shows existing values as defaults, doesn't duplicate/corrupt.
+The original goal was "a forker goes from clone to configured site with one CLI run," via an interactive `npm run setup` script. That's dropped in favor of Epic 13's local JSON editor: once it exists, a forker configures `site.config.json`/`personal.json`/`socials.json` by editing fields directly, with schema validation, instead of answering CLI prompts that write the same files.
 
-## Stories
+## What this actually costs (read before treating this as free)
+
+The CLI would have *computed* two things a forker now has to get right by hand:
+
+- **`basePath`** — was `/<entered-repo-name>/`, computed from the repo name typed into the prompt. Now the forker must know the convention and set `site.config.json.basePath` to `/<repo-name>/` themselves.
+- **`package.json`'s `homepage`** — was `https://<username>.github.io/<repo-name>/`, built from GitHub username + repo name. Epic 13 only edits `src/data/*.json`, not `package.json`, so this field has no guided path at all now — it's a plain manual edit.
+
+**Action item for Epic 10 (README/Maintainer Guide)**: this needs an explicit, worked-example section — "set `basePath` to `/your-repo-name/`, set `package.json.homepage` to `https://your-username.github.io/your-repo-name/`" — so dropping the CLI doesn't quietly make forking harder without anyone noticing. Don't let Epic 10 skip this because "there's no setup script to document."
+
+## Stories (all superseded)
+
 | ID | Story | Priority |
 |---|---|---|
-| ST-066 | Interactive setup CLI | Must |
-| ST-067 | Writes config incl. `basePath` | Must |
-| ST-068 | Updates `package.json` fields | Should |
-| ST-069 | Safely re-runnable | Should |
+| ST-066 | ~~Interactive setup CLI~~ | Must |
+| ST-067 | ~~Writes config incl. `basePath`~~ | Must |
+| ST-068 | ~~Updates `package.json` fields~~ | Should |
+| ST-069 | ~~Safely re-runnable~~ (moot once ST-066/067/068 are dropped) | Should |
 
 Full acceptance criteria: `docs/stories.md` Epic 7.
