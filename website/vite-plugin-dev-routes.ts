@@ -39,8 +39,10 @@ export function devRoutes(): Plugin {
       return `
 import { lazy } from 'react'
 const ContentEditorPage = lazy(() => import('@/pages/ContentEditorPage'))
+const BlogEditorPage = lazy(() => import('@/pages/BlogEditorPage'))
 export const devRoutes = [
   { path: '/dev/content', Component: ContentEditorPage },
+  { path: '/dev/blog', Component: BlogEditorPage },
 ]
 `
     },

@@ -24,17 +24,19 @@ describe('CustomizePage (ST-111)', () => {
     expect(screen.getByRole('alert')).toHaveTextContent(/npm run dev/i)
   })
 
-  it('enables the JSON Content Editor (Epic 13 implemented), but not the others', () => {
+  it('enables the JSON Content Editor and Blog Post Editor (Epics 13, 14), but not "More tools"', () => {
     // vitest runs with import.meta.env.DEV === true, so this specifically
-    // proves the *unimplemented* tools stay disabled even in a dev build —
+    // proves the *unimplemented* tool stays disabled even in a dev build —
     // not just "disabled because not running locally".
     renderPage()
-    expect(screen.getByRole('link', { name: 'Open' })).toHaveAttribute('href', '/dev/content')
+    const openLinks = screen.getAllByRole('link', { name: 'Open' })
+    expect(openLinks.map((link) => link.getAttribute('href'))).toEqual([
+      '/dev/content',
+      '/dev/blog',
+    ])
 
     const disabledButtons = screen.getAllByRole('button')
-    expect(disabledButtons).toHaveLength(2) // Blog Post Editor + More tools
-    for (const button of disabledButtons) {
-      expect(button).toBeDisabled()
-    }
+    expect(disabledButtons).toHaveLength(1) // More tools
+    expect(disabledButtons[0]).toBeDisabled()
   })
 })

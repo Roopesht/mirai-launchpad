@@ -26,7 +26,7 @@ const tools: DevTool[] = [
     description: 'Create and edit posts under content/blog/, frontmatter included.',
     icon: FileText,
     href: '/dev/blog',
-    implemented: false, // Epic 14 — flips to true once the route exists
+    implemented: true, // Epic 14
   },
   {
     title: 'More tools',
